@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { contactDataUpdate } from "../store/formJsonSlice";
 import store from "../store/store";
+import { useUpdateInitialJsonDataMutation } from "../store/apiSlice";
+import Loader from "../components/Loader";
 
 const Contact = () => {
   const { contact } = useSelector((state) => state.formJson);
@@ -14,9 +16,11 @@ const Contact = () => {
   } = useForm({
     defaultValues: { ...contact },
   });
+  const [updateJson, { isLoading }] = useUpdateInitialJsonDataMutation();
 
   const onSubmit = (data) => {
-    let updatedState = store.dispatch(contactDataUpdate({ ...data }));
+    store.dispatch(contactDataUpdate({ ...data }));
+    updateJson(store.getState().formJson);
   };
 
   return (
@@ -130,7 +134,7 @@ const Contact = () => {
               type="submit"
               className="bg-green-600 text-white px-8 py-3 rounded-md hover:bg-green-700 transition-colors font-medium"
             >
-              Submit Form
+              {isLoading && <Loader />} Submit Form
             </button>
           </div>
         </form>

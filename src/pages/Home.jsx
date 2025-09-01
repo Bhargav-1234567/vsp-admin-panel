@@ -3,9 +3,13 @@ import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { useSelector } from "react-redux";
 import store from "../store/store";
 import { homeDataUpdate } from "../store/formJsonSlice";
+import { useUpdateInitialJsonDataMutation } from "../store/apiSlice";
+import Loader from "../components/Loader";
 
 const Home = () => {
   const { home } = useSelector((state) => state.formJson);
+  const [updateJson, { isLoading }] = useUpdateInitialJsonDataMutation();
+
   const {
     register,
     control,
@@ -52,7 +56,8 @@ const Home = () => {
   });
 
   const onSubmit = (data) => {
-    let updatedState = store.dispatch(homeDataUpdate({ ...data }));
+    store.dispatch(homeDataUpdate({ ...data }));
+    updateJson(store.getState().formJson);
   };
 
   return (
@@ -415,7 +420,7 @@ const Home = () => {
               type="submit"
               className="bg-green-600 text-white px-8 py-3 rounded-md hover:bg-green-700 transition-colors font-medium"
             >
-              Submit Form
+              {isLoading && <Loader />} Submit Form
             </button>
           </div>
         </form>

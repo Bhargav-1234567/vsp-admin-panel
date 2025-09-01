@@ -4,10 +4,11 @@ import { useSelector } from "react-redux";
 import { companyDataUpdate } from "../store/formJsonSlice";
 import store from "../store/store";
 import { useUpdateInitialJsonDataMutation } from "../store/apiSlice";
+import Loader from "../components/Loader";
 
 const Company = () => {
   const { company } = useSelector((state) => state.formJson);
-  const [updateJson, {}] = useUpdateInitialJsonDataMutation();
+  const [updateJson, { isLoading }] = useUpdateInitialJsonDataMutation();
   const {
     register,
     control,
@@ -524,7 +525,7 @@ const Company = () => {
               type="submit"
               className="bg-green-600 text-white px-8 py-3 rounded-md hover:bg-green-700 transition-colors font-medium"
             >
-              Submit Form
+              {isLoading && <Loader />} Submit Form
             </button>
           </div>
         </form>

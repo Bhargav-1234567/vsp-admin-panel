@@ -3,6 +3,8 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { useSelector } from "react-redux";
 import store from "../store/store";
 import { servicesDataUpdate } from "../store/formJsonSlice";
+import { useUpdateInitialJsonDataMutation } from "../store/apiSlice";
+import Loader from "../components/Loader";
 
 // Separate component for Service Item with its own field array
 const ServiceItem = ({
@@ -136,6 +138,7 @@ const ServiceItem = ({
 
 const Services = () => {
   const { services } = useSelector((state) => state.formJson);
+  const [updateJson, { isLoading }] = useUpdateInitialJsonDataMutation();
 
   const {
     register,
@@ -165,7 +168,8 @@ const Services = () => {
   });
 
   const onSubmit = (data) => {
-    let updatedState = store.dispatch(servicesDataUpdate({ ...data }));
+    store.dispatch(servicesDataUpdate({ ...data }));
+    updateJson(store.getState().formJson);
   };
 
   return (
@@ -328,7 +332,7 @@ const Services = () => {
               type="submit"
               className="bg-green-600 text-white px-8 py-3 rounded-md hover:bg-green-700 transition-colors font-medium"
             >
-              Submit Form
+              {isLoading && <Loader />} Submit Form
             </button>
           </div>
         </form>
