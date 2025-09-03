@@ -113,6 +113,24 @@ const ClientReviewItem = ({
             </p>
           )}
         </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Description
+          </label>
+          <textarea
+            type="datetime-local"
+            {...register(`${fieldName}.${reviewIndex}.description`, {
+              required: "Description is required",
+            })}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          {errors[fieldName]?.[reviewIndex]?.description && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors[fieldName][reviewIndex].description.message}
+            </p>
+          )}
+        </div>
       </div>
 
       <div className="border-t pt-4">
@@ -313,6 +331,25 @@ const Testimonials = () => {
                       {errors.numerics?.[index]?.count && (
                         <p className="text-red-500 text-sm mt-1">
                           {errors.numerics[index].count.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Status *
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="eg. %,+,-"
+                        {...register(`numerics.${index}.status`, {
+                          required: "Status is required",
+                        })}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                      {errors.numerics?.[index]?.status && (
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.numerics[index].status.message}
                         </p>
                       )}
                     </div>

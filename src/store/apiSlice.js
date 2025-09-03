@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { logout } from "./authSlice"; // optional, if you want to clear auth state
-
+import { toast } from "sonner";
+const apiBase = process.env.REACT_APP_API_URL;
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://vsp-backend-q30d.onrender.com",
+  baseUrl: apiBase || "https://vsp-backend-q30d.onrender.com",
   prepareHeaders: (headers, { getState }) => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -16,7 +17,11 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithAuth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
-  if (result.error && result.error.status === 401) {
+  if (
+    result.error &&
+    (result.error.status === 401 || result.error.status === 403)
+  ) {
+    toast.error("Token Expired!");
     // Optional: clear token from redux
     api.dispatch(logout?.());
 

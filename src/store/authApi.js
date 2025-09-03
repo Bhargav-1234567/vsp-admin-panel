@@ -1,10 +1,11 @@
 // src/store/apiSlice.js
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+const apiBase = process.env.REACT_APP_API_URL;
 
 export const authApiSlice = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://vsp-backend-q30d.onrender.com",
+    baseUrl: apiBase || "https://vsp-backend-q30d.onrender.com",
   }),
   endpoints: (builder) => ({
     // Company endpoints

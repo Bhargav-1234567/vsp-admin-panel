@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useUploadImageMutation } from "../store/apiSlice";
+const apiBase = process.env.REACT_APP_API_URL;
 
 const Images = () => {
   const {
@@ -10,12 +11,12 @@ const Images = () => {
     watch,
   } = useForm();
   const [previews, setPreviews] = useState({
-    logo: null,
-    Slide1: null,
-    Slide2: null,
-    Slide3: null,
-    Slide4: null,
-    Slide5: null,
+    logo: `${apiBase}/images/logo.png`,
+    Slide1: `${apiBase}/images/Slide1.png`,
+    Slide2: `${apiBase}/images/Slide2.png`,
+    Slide3: `${apiBase}/images/Slide3.png`,
+    Slide4: `${apiBase}/images/Slide4.png`,
+    Slide5: `${apiBase}/images/Slide5.png`,
   });
   const [uploadImage, { isLoading, isError, data }] = useUploadImageMutation();
   const onSubmit = (data) => {

@@ -64,10 +64,6 @@ const Contact = () => {
               type="tel"
               {...register("phoneNumber", {
                 required: "Phone number is required",
-                pattern: {
-                  value: /^[\+]?[1-9][\d]{0,15}$/,
-                  message: "Please enter a valid phone number",
-                },
               })}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter phone number (e.g., +1234567890)"
