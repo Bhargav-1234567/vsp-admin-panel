@@ -5,6 +5,7 @@ import { companyDataUpdate } from "../store/formJsonSlice";
 import store from "../store/store";
 import { useUpdateInitialJsonDataMutation } from "../store/apiSlice";
 import Loader from "../components/Loader";
+import IconPicker from "../components/IconPicker";
 
 const Company = () => {
   const { company } = useSelector((state) => state.formJson);
@@ -326,6 +327,23 @@ const Company = () => {
                       {errors.coreValues?.[index]?.description && (
                         <p className="text-red-500 text-sm mt-1">
                           {errors.coreValues[index].description.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Icon *
+                      </label>
+                      <IconPicker
+                        control={control}
+                        name={`coreValues.${index}.icon`}
+                        required
+                      />
+
+                      {errors.coreValues?.[index]?.icon && (
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.coreValues?.[index].icon.message}
                         </p>
                       )}
                     </div>

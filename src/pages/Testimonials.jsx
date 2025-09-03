@@ -5,6 +5,7 @@ import { testimonialsDataUpdate } from "../store/formJsonSlice";
 import store from "../store/store";
 import { useUpdateInitialJsonDataMutation } from "../store/apiSlice";
 import Loader from "../components/Loader";
+import IconPicker from "../components/IconPicker";
 
 // Component for Client Review Item with its own field array
 const ClientReviewItem = ({
@@ -655,6 +656,23 @@ const Testimonials = () => {
                       {errors.reviewByService?.[index]?.rating && (
                         <p className="text-red-500 text-sm mt-1">
                           {errors.reviewByService[index].rating.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Icon *
+                      </label>
+                      <IconPicker
+                        control={control}
+                        name={`reviewByService.${index}.icon`}
+                        required
+                      />
+
+                      {errors.reviewByService?.[index]?.icon && (
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.reviewByService?.[index].icon.message}
                         </p>
                       )}
                     </div>

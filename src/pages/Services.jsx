@@ -5,6 +5,7 @@ import store from "../store/store";
 import { servicesDataUpdate } from "../store/formJsonSlice";
 import { useUpdateInitialJsonDataMutation } from "../store/apiSlice";
 import Loader from "../components/Loader";
+import IconPicker from "../components/IconPicker";
 
 // Separate component for Service Item with its own field array
 const ServiceItem = ({
@@ -80,7 +81,7 @@ const ServiceItem = ({
         </div>
       </div>
 
-      <div className="mb-4">
+      <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Description *
         </label>
@@ -95,6 +96,23 @@ const ServiceItem = ({
         {errors.services?.[serviceIndex]?.description && (
           <p className="text-red-500 text-sm mt-1">
             {errors.services[serviceIndex].description.message}
+          </p>
+        )}
+      </div>
+
+      <div className="mb-4 mt-1">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Icon *
+        </label>
+        <IconPicker
+          control={control}
+          name={`services.${serviceIndex}.icon`}
+          required
+        />
+
+        {errors.services?.[serviceIndex]?.icon && (
+          <p className="text-red-500 text-sm mt-1">
+            {errors.services?.[serviceIndex].icon.message}
           </p>
         )}
       </div>
@@ -317,6 +335,23 @@ const Services = () => {
                       {errors.process?.[processIndex]?.description && (
                         <p className="text-red-500 text-sm mt-1">
                           {errors.process[processIndex].description.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Icon *
+                      </label>
+                      <IconPicker
+                        control={control}
+                        name={`process.${processIndex}.icon`}
+                        required
+                      />
+
+                      {errors.process?.[processIndex]?.icon && (
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.process?.[processIndex].icon.message}
                         </p>
                       )}
                     </div>
