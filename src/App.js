@@ -20,6 +20,7 @@ import { initializeFormData } from "./store/formJsonSlice";
 import Images from "./pages/Images";
 import Login from "./pages/Login";
 import { Toaster } from "sonner";
+import InquiryManagement from "./pages/InquiryManagement";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="blogs" element={<Blogs />} />
             <Route path="contact" element={<Contact />} />
             <Route path="images" element={<Images />} />
+            <Route path="inquiries" element={<InquiryManagement />} />
           </Route>
 
           <Route path="login" element={<Login />} />

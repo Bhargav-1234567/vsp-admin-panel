@@ -11,6 +11,7 @@ import {
   FiMail,
   FiTrello,
   FiImage,
+  FiUserCheck,
 } from "react-icons/fi";
 import { closeSidebar } from "../../store/sidebarSlice";
 
@@ -26,6 +27,7 @@ const Sidebar = () => {
     { path: "/blogs", icon: FiFileText, label: "Blogs" },
     { path: "/contact", icon: FiMail, label: "Contact" },
     { path: "/images", icon: FiImage, label: "Images" },
+    { path: "/inquiries", icon: FiUserCheck, label: "Inquiries" },
   ];
 
   return (
