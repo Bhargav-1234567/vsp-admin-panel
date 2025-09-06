@@ -11,23 +11,40 @@ const Images = () => {
     watch,
   } = useForm();
   const [previews, setPreviews] = useState({
-    logo: `${apiBase}/images/logo.png`,
-    Slide1: `${apiBase}/images/Slide1.png`,
-    Slide2: `${apiBase}/images/Slide2.png`,
-    Slide3: `${apiBase}/images/Slide3.png`,
-    Slide4: `${apiBase}/images/Slide4.png`,
-    Slide5: `${apiBase}/images/Slide5.png`,
+    logo: `${apiBase}images/logo.png`,
+    Slide1: `${apiBase}images/Slide1.png`,
+    Slide2: `${apiBase}images/Slide2.png`,
+    Slide3: `${apiBase}images/Slide3.png`,
+    Slide4: `${apiBase}images/Slide4.png`,
+    Slide5: `${apiBase}images/Slide5.png`,
   });
   const [uploadImage, { isLoading, isError, data }] = useUploadImageMutation();
+  const [uploadStatus, setUploadStatus] = useState({});
+
   const onSubmit = (data) => {
     console.log("Form data:", data);
-    // Here you would typically handle the file upload to a server
     alert("Files selected successfully! Check console for file details.");
   };
 
   // Handle file preview
   const handleFileChange = async (fieldName, file) => {
     if (file) {
+      // Validate file size before proceeding
+      const maxSize = 2 * 1024 * 1024; // 2MB
+      if (file.size > maxSize) {
+        setUploadStatus((prev) => ({
+          ...prev,
+          [fieldName]: { error: "File size exceeds 2MB limit" },
+        }));
+        return;
+      }
+
+      // Clear any previous errors
+      setUploadStatus((prev) => ({
+        ...prev,
+        [fieldName]: { loading: true },
+      }));
+
       const reader = new FileReader();
       reader.onload = (e) => {
         setPreviews((prev) => ({
@@ -37,8 +54,19 @@ const Images = () => {
       };
       reader.readAsDataURL(file);
 
-      /////////
-      await uploadImage({ file, filename: fieldName }).unwrap();
+      try {
+        // Upload the image
+        await uploadImage({ file, filename: fieldName }).unwrap();
+        setUploadStatus((prev) => ({
+          ...prev,
+          [fieldName]: { success: true },
+        }));
+      } catch (error) {
+        setUploadStatus((prev) => ({
+          ...prev,
+          [fieldName]: { error: "Upload failed. Please try again." },
+        }));
+      }
     }
   };
 
@@ -48,28 +76,28 @@ const Images = () => {
 
     const uploadedFile = file[0];
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    const maxSize = 2 * 1024 * 1024; // 2MB
 
     if (!allowedTypes.includes(uploadedFile.type)) {
       return "Only JPEG and PNG files are allowed";
     }
 
     if (uploadedFile.size > maxSize) {
-      return "File size must be less than 5MB";
+      return "File size must be less than 2MB";
     }
 
     return true;
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">
-          File Upload Form
+        <h1 className="text-2xl font-bold text-gray-800 mb-2">
+          Image Upload Form
         </h1>
         <p className="text-sm text-gray-600 mb-6">
           Please upload images in PNG or JPEG format only. Maximum file size:
-          5MB
+          2MB
         </p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
@@ -96,18 +124,34 @@ const Images = () => {
                     {errors.logo.message}
                   </p>
                 )}
+                {uploadStatus.logo?.error && (
+                  <p className="text-red-500 text-sm mt-2">
+                    {uploadStatus.logo.error}
+                  </p>
+                )}
+                {uploadStatus.logo?.loading && (
+                  <p className="text-blue-500 text-sm mt-2">Uploading...</p>
+                )}
+                {uploadStatus.logo?.success && (
+                  <p className="text-green-500 text-sm mt-2">
+                    Upload successful!
+                  </p>
+                )}
                 <p className="text-xs text-gray-500 mt-1">
-                  Accepted formats: PNG, JPEG. Max size: 5MB
+                  Accepted formats: PNG, JPEG. Max size: 2MB
                 </p>
               </div>
 
               {previews.logo && (
-                <div className="w-32 h-32 border border-gray-200 rounded-lg p-2">
+                <div className="w-32 h-32 border border-gray-200 rounded-lg p-2 flex flex-col">
                   <img
                     src={previews.logo}
                     alt="Logo preview"
                     className="w-full h-full object-contain"
                   />
+                  <p className="text-xs text-gray-500 text-center mt-1">
+                    Preview
+                  </p>
                 </div>
               )}
             </div>
@@ -147,15 +191,33 @@ const Images = () => {
                             {errors[fieldName].message}
                           </p>
                         )}
+                        {uploadStatus[fieldName]?.error && (
+                          <p className="text-red-500 text-sm mt-2">
+                            {uploadStatus[fieldName].error}
+                          </p>
+                        )}
+                        {uploadStatus[fieldName]?.loading && (
+                          <p className="text-blue-500 text-sm mt-2">
+                            Uploading...
+                          </p>
+                        )}
+                        {uploadStatus[fieldName]?.success && (
+                          <p className="text-green-500 text-sm mt-2">
+                            Upload successful!
+                          </p>
+                        )}
                       </div>
 
                       {previews[fieldName] && (
-                        <div className="w-full h-40 border border-gray-200 rounded-lg p-2">
+                        <div className="w-full h-40 border border-gray-200 rounded-lg p-2 flex flex-col">
                           <img
                             src={previews[fieldName]}
                             alt={`Slide ${slideNumber} preview`}
                             className="w-full h-full object-contain"
                           />
+                          <p className="text-xs text-gray-500 text-center mt-1">
+                            Preview
+                          </p>
                         </div>
                       )}
                     </div>
