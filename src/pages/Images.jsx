@@ -176,7 +176,7 @@ const Images = () => {
                       <div>
                         <input
                           type="file"
-                          accept=".png,.jpeg,.jpg"
+                          accept=".png,.jpeg,.jpg, .webp"
                           {...register(fieldName, {
                             required: `Slide ${slideNumber} is required`,
                             validate: validateFile,
