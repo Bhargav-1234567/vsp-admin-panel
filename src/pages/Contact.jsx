@@ -124,6 +124,125 @@ const Contact = () => {
             )}
           </div>
 
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Instagram *
+            </label>
+            <input
+              type="url"
+              {...register("instagram", {
+                required: "Instagram address is required",
+                pattern: {
+                  value:
+                    /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)/i,
+                  message: "Please enter a valid URL",
+                },
+              })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter Instagram URL"
+            />
+            {errors.instagram && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.instagram.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Facebook *
+            </label>
+            <input
+              type="url"
+              {...register("facebook", {
+                required: "Facebook address is required",
+                pattern: {
+                  value:
+                    /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)/i,
+                  message: "Please enter a valid URL",
+                },
+              })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter Facebook URL"
+            />
+            {errors.facebook && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.facebook.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Whatsapp *
+            </label>
+            <input
+              type="url"
+              {...register("whatsapp", {
+                required: "Whatsapp address is required",
+                pattern: {
+                  value:
+                    /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)/i,
+                  message: "Please enter a valid URL",
+                },
+              })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter Whatsapp URL"
+            />
+            {errors.whatsapp && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.whatsapp.message}
+              </p>
+            )}
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Twitter *
+            </label>
+            <input
+              type="url"
+              {...register("twitter", {
+                required: "Twitter address is required",
+                pattern: {
+                  value:
+                    /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)/i,
+                  message: "Please enter a valid URL",
+                },
+              })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter Twitter URL"
+            />
+            {errors.twitter && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.twitter.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              LinkedIn *
+            </label>
+            <input
+              type="url"
+              {...register("linkedIn", {
+                required: "LinkedIn address is required",
+                pattern: {
+                  value:
+                    /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)/i,
+                  message: "Please enter a valid URL",
+                },
+              })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter LinkedIn URL"
+            />
+            {errors.linkedIn && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.linkedIn.message}
+              </p>
+            )}
+          </div>
+
           {/* Submit Button */}
           <div className="flex justify-center pt-4">
             <button
